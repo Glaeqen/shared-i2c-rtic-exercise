@@ -1,0 +1,22 @@
+[package]
+name = "shared-i2c-rtic-exercise"
+version = "0.1.0"
+authors = ["Glaeqen <glaeqen@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cortex-m = "0.6.2"
+cortex-m-rt = "0.6.12"
+stm32f4 = { features = ["stm32f407", "rt"], version = "0.10.0" }
+stm32f4xx-hal = { features = ["stm32f407"], version = "0.7.0"}
+cortex-m-rtfm = "0.5.1"
+cortex-m-semihosting = "0.3.5"
+panic-semihosting = "0.5.3"
+embedded-hal = "0.2.3"
+
+[[bin]]
+name = "shared-i2c-rtic-exercise"
+test = false
+bench = false

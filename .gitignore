@@ -1,0 +1,12 @@
+# Rust
+**/target
+**/*.rs.bk
+
+# VSCode
+**/.vscode
+
+# JetBrains related files
+**/.idea
+
+# GDB
+**/.gdb_history
