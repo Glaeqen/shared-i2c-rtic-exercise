@@ -9,8 +9,6 @@ use panic_semihosting as _;
 use cortex_m_semihosting::hprintln;
 use rtfm::app;
 
-use stm32f4xx_hal::rcc::RccExt;
-use stm32f4xx_hal::time::U32Ext;
 use some_driver::SomeDriver;
 use i2c_proxy::I2cHandlerProxy;
 use i2c_proxy::I2cCommand;
@@ -19,7 +17,7 @@ use crate::scoped_task_spawn_provider::ScopedTaskSpawnProvider;
 use core::cell::RefCell;
 use crate::i2c_proxy::I2cHandlerCallable;
 
-#[app(device = stm32f4::stm32f407, peripherals = true, monotonic = rtfm::cyccnt::CYCCNT)]
+#[app(device = lm3s6965, peripherals = true)]
 const APP: () = {
     struct Resources {
         driver:
@@ -32,11 +30,7 @@ const APP: () = {
         >,
     }
     #[init(spawn = [some_driver_handler])]
-    fn init(mut cx: init::Context) -> init::LateResources {
-        let _clocks = cx.device.RCC.constrain().cfgr.sysclk(168.mhz()).freeze();
-        cx.core.DCB.enable_trace();
-        cx.core.DWT.enable_cycle_counter();
-
+    fn init(cx: init::Context) -> init::LateResources {
         let driver =
             RefCell::new(
                 SomeDriver::new(
@@ -79,8 +73,8 @@ const APP: () = {
     }
 
     extern "C" {
-        fn ADC();
-        fn USART1();
+        fn GPIOA();
+        fn GPIOB();
     }
 };
 
